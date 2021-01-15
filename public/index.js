@@ -56,10 +56,11 @@ const func = {
     func.playWithPermission(() => {
       const itemSelected = parseInt(event.target.classList[1].split('-')[1])
       const $itemSelected = document.getElementById(`item-${itemSelected}-container`)
-      if (!$itemSelected.classList.contains("item-run-out") && res.currentDice == "wait") {
-        $itemSelected.classList.add("item-run-out")
-
-        if (availableItem[res.currentPlayer][itemSelected] === 'slow') {
+      if (res.currentDice == "wait") {
+        if (!$itemSelected.classList.contains("item-run-out")) {
+          $itemSelected.classList.add("item-run-out")
+        }
+        if (availableItem[res.currentPlayer][itemSelected] === 'slow' && res.itemCount[res.currentPlayer]['slow']) {
             itemController.slowHandler()
         } else if (availableItem[res.currentPlayer][itemSelected] === 'shield') {
             itemController.shieldHandler()
@@ -67,7 +68,6 @@ const func = {
             itemController.trapHandler()
         }
       }
-  
     })
   },
 
@@ -660,15 +660,23 @@ socket.on('slowHandler', () => {
   }
 })
 socket.on('shieldHandler', () => {
-  res.isShield = true;
+  if (res.isShield) {
+    func.showItemBeingUsed('none')
+  } else {
+    func.showItemBeingUsed('shield')
+  }
+  res.isShield = !res.isShield;
   func.play(isSoundOn, clickSound);
-  func.showItemBeingUsed('shield')
   // console.log('shield is being used by the current player!')
 })
 socket.on('trapHandler', () => {
-  res.isTrap = true;
+  if (res.isTrap) {
+    func.showItemBeingUsed('none')
+  } else {
+    func.showItemBeingUsed('trap')
+  }
+  res.isTrap = !res.isTrap;
   func.play(isSoundOn, clickSound);
-  func.showItemBeingUsed('trap')
   // console.log('trap is being used by the current player!')
 })
 socket.on('setTrap', (id) => {
@@ -755,13 +763,20 @@ const itemController = {
   },
 
   shieldHandler: function () {
-    document.querySelector(".bg-container").style.cursor =
-    "url('./Images/shield-cursor.png') 6 6, auto";
+    if (res.isShield) {
+      document.querySelector(".bg-container").style.cursor = "pointer";
+    } else {
+      document.querySelector(".bg-container").style.cursor = "url('./Images/shield-cursor.png') 6 6, auto";
+    }
     socket.emit('shieldHandler')
   },
 
   trapHandler: function () {
-    document.querySelector(".bg-container").style.cursor = "url('./Images/trap-cursor.png') 6 6, auto";
+    if (res.isTrap) {
+      document.querySelector(".bg-container").style.cursor = "pointer";
+    } else {
+      document.querySelector(".bg-container").style.cursor = "url('./Images/trap-cursor.png') 6 6, auto";
+    }
     socket.emit('trapHandler')
   },
 
