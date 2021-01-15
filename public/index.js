@@ -62,9 +62,9 @@ const func = {
         }
         if (availableItem[res.currentPlayer][itemSelected] === 'slow' && res.itemCount[res.currentPlayer]['slow']) {
             itemController.slowHandler()
-        } else if (availableItem[res.currentPlayer][itemSelected] === 'shield') {
+        } else if (availableItem[res.currentPlayer][itemSelected] === 'shield' && res.itemCount[res.currentPlayer]['shield']) {
             itemController.shieldHandler()
-        } else if (availableItem[res.currentPlayer][itemSelected] === 'trap') {
+        } else if (availableItem[res.currentPlayer][itemSelected] === 'trap' && res.itemCount[res.currentPlayer]['trap']) {
             itemController.trapHandler()
         }
       }
