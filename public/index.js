@@ -265,6 +265,7 @@ const func = {
         res.currentPos[res.currentPlayer][2] ==
       rules.win[res.currentPlayer]
     ) {
+      func.play(isSoundOn, playerFinishSound);
       res.winState[res.currentPlayer] = true;
       res.rank.push(res.currentPlayer);
       // res.rank.push(rules.playerEmail[res.currentPlayer]);
@@ -649,7 +650,6 @@ socket.on('skipBtnHandler', () => {
   }
 })
 socket.on('slowHandler', () => {
-  func.play(isSoundOn, clickSound);
   res.itemCount[res.currentPlayer].slow--;
   for (let i = 1; i <= 4; i++) {
     if (res.currentPlayer != i && !res.winState[i]) {
@@ -658,6 +658,7 @@ socket.on('slowHandler', () => {
       }
     }
   }
+  func.play(isSoundOn, itemClickSound);
 })
 socket.on('shieldHandler', () => {
   if (res.isShield) {
@@ -666,7 +667,7 @@ socket.on('shieldHandler', () => {
     func.showItemBeingUsed('shield')
   }
   res.isShield = !res.isShield;
-  func.play(isSoundOn, clickSound);
+  func.play(isSoundOn, itemClickSound);
   // console.log('shield is being used by the current player!')
 })
 socket.on('trapHandler', () => {
@@ -676,7 +677,7 @@ socket.on('trapHandler', () => {
     func.showItemBeingUsed('trap')
   }
   res.isTrap = !res.isTrap;
-  func.play(isSoundOn, clickSound);
+  func.play(isSoundOn, itemClickSound);
   // console.log('trap is being used by the current player!')
 })
 socket.on('setTrap', (id) => {
