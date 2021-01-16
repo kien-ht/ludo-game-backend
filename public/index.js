@@ -466,7 +466,7 @@ socket.on('homeHandler', ({ selectedPlayer, selectedPos }) => {
     res.currentPlayer == res.selectedPlayer &&
     res.currentPos[res.currentPlayer][res.selectedPos] == 0
   ) {
-    func.play(isSoundOn, clickSound);
+    func.play(isSoundOn, horseStartSound);
     let kickSameHorse = func.fireHorseKick(
       func.toId(rules.start[res.currentPlayer])
     );
@@ -992,12 +992,20 @@ for (let i = 0; i < 3; i++) {
 
 // Global variables and eventlisteners: end
 
-//sound: start
-
+//sound: star
 var clickSound = document.getElementById("click-sound");
 var horseKickSound = document.getElementById("horse-kick-sound");
 var nextPlayerSound = document.getElementById("next-player-sound");
 var horseKickFalseSound = document.getElementById("horse-kick-false-sound");
+
+var cashGenerateSound = document.getElementById("cash-generate-sound");
+var horseMovingSound = document.getElementById("horse-moving-sound");
+var horseStartSound = document.getElementById("horse-start-sound");
+var itemClickSound = document.getElementById("item-click-sound");
+var playerFinishSound = document.getElementById("player-finish-sound");
+var popUpNotificationSound = document.getElementById("pop-up-notification-sound");
+var backgroundMusic = document.getElementById("background-music");
+
 //sound: end
 
 document.querySelectorAll(".btn-sound").forEach((item) => {
